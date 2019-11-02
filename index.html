@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <meta name="description" content="">
+	  <meta name="author" content="">
+
+	  <title>Departement | Login</title>
+
+	  <!-- Bootstrap core CSS -->
+	  <link href="etudiant/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	  <!-- font awesome icons -->
+	  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+	  <!-- Custom css -->
+	  <link href="etudiant/css/login.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+	    <div class="row">
+	      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+	        <div class="card card-signin my-5">
+	          <div class="card-body text-center">
+	          	<img src="etudiant/img/logo-removebg.png" class="card-title" width="150px">
+	            <form class="form-signin" id="login">
+	              <div class="form-label-group">
+	                <input type="text" id="user" class="form-control" placeholder="Username" required autofocus>
+	                <label for="user">Username</label>
+	              </div>
+
+	              <div class="form-label-group">
+	                <input type="password" id="password" class="form-control" placeholder="Password" required>
+	                <label for="password">Password</label>
+	              </div>
+
+	              <div class="form-check form-check-inline mb-3">
+	                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="etud" checked>
+	                <label class="form-check-label" for="inlineRadio1">Etudiant</label>
+	              </div>
+	              <div class="form-check form-check-inline">
+	                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="prof">
+	                <label class="form-check-label" for="inlineRadio2">Enseignent</label>
+	              </div>
+
+
+	              <button class="btn btn-lg btn-outline-success btn-block text-uppercase" type="submit">Login</button>
+	            </form>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+
+	  <!-- Bootstrap core JavaScript -->
+	  <script src="etudiant/vendor/jquery/jquery.min.js"></script>
+	  <script src="etudiant/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	  <script type="text/javascript">
+	  	//login ajax
+	  	$( "#login" ).submit(function( event ){
+	  		event.preventDefault();
+
+	  		var usertype = $("input[name='inlineRadioOptions']:checked").val();
+	  		var username = $("#user").val();
+	  		var password = $("#password").val();
+
+	  		// ajax
+	  		$.ajax({
+	  		    type: 'POST',
+	  		    url: 'etudiant/backend/login.php',
+	  		    data: { usertype: usertype,
+	  		    		username: username,
+	  		    		password: password},
+	  		    beforeSend:function(){
+	  		    	// set the loading screen
+	  		    },  
+	  		 error: function(){
+	  		  alert("error no connection");
+	  		 },     
+	  		 success:function(data)
+	  		 {
+	  		 	// remove the loading screen
+	  		 	alert(data);
+	  		 	if(data === "etu"){
+	  		 		window.location.replace("etudiant/index.html");
+	  		 	}else if(data === "prf"){
+	  		 		window.location.replace("prof/index.html");
+	  		 	}
+	  		 }
+	  		});
+
+	  	});
+
+
+	  </script>
+
+</body>
+</html>
